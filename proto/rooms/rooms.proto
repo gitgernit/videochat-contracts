@@ -2,10 +2,17 @@ syntax = "proto3";
 
 option go_package = "internal/transport/grpc/proto";
 
+import "google/api/annotations.proto";
+
 package proto;
 
 service RoomsService {
-  rpc PingPong(stream Ping) returns (stream Pong) {}
+  rpc PingPong(stream Ping) returns (stream Pong) {
+    option (google.api.http) = {
+      post: "/ping-pong",
+      body: "*",
+    };
+  }
 }
 
 message Ping {
