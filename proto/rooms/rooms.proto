@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "internal/transport/grpc/proto";
+
+package proto;
+
+service RoomsService {
+  rpc PingPong(stream Ping) returns (stream Pong) {}
+}
+
+message Ping {
+  uint32 counter = 1;
+}
+
+message Pong {
+  uint32 counter = 1;
+}
