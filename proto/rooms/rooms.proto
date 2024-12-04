@@ -9,8 +9,7 @@ package proto;
 service RoomsService {
   rpc PingPong(stream Ping) returns (stream Pong) {
     option (google.api.http) = {
-      post: "/ping-pong",
-      body: "*",
+      get: "/ping-pong",
     };
   }
 }
