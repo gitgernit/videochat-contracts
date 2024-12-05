@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "internal/transport/grpc/proto";
+option go_package = "proto/rooms/go/proto";
 
 import "google/api/annotations.proto";
 
