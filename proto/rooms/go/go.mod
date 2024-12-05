@@ -1,4 +1,4 @@
-module gitlab.crja72.ru/gospec/go5/contracts
+module gitlab.crja72.ru/gospec/go5/contracts/proto/rooms/go
 
 go 1.23.0
 
