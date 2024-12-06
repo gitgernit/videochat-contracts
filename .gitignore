@@ -5,6 +5,12 @@
 # JetBrains
 .idea
 
+# Environment
+.venv
+venv
+env
+.env
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
