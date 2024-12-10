@@ -78,6 +78,53 @@ func request_RoomsService_PingPong_0(ctx context.Context, marshaler runtime.Mars
 	return stream, metadata, errChan, nil
 }
 
+func request_RoomsService_JoinRoom_0(ctx context.Context, marshaler runtime.Marshaler, client RoomsServiceClient, req *http.Request, pathParams map[string]string) (RoomsService_JoinRoomClient, runtime.ServerMetadata, chan error, error) {
+	var metadata runtime.ServerMetadata
+	errChan := make(chan error, 1)
+	stream, err := client.JoinRoom(ctx)
+	if err != nil {
+		grpclog.Errorf("Failed to start streaming: %v", err)
+		close(errChan)
+		return nil, metadata, errChan, err
+	}
+	dec := marshaler.NewDecoder(req.Body)
+	handleSend := func() error {
+		var protoReq RoomMethod
+		err := dec.Decode(&protoReq)
+		if err == io.EOF {
+			return err
+		}
+		if err != nil {
+			grpclog.Errorf("Failed to decode request: %v", err)
+			return status.Errorf(codes.InvalidArgument, "Failed to decode request: %v", err)
+		}
+		if err := stream.Send(&protoReq); err != nil {
+			grpclog.Errorf("Failed to send request: %v", err)
+			return err
+		}
+		return nil
+	}
+	go func() {
+		defer close(errChan)
+		for {
+			if err := handleSend(); err != nil {
+				errChan <- err
+				break
+			}
+		}
+		if err := stream.CloseSend(); err != nil {
+			grpclog.Errorf("Failed to terminate client stream: %v", err)
+		}
+	}()
+	header, err := stream.Header()
+	if err != nil {
+		grpclog.Errorf("Failed to get header from client: %v", err)
+		return nil, metadata, errChan, err
+	}
+	metadata.HeaderMD = header
+	return stream, metadata, errChan, nil
+}
+
 // RegisterRoomsServiceHandlerServer registers the http handlers for service RoomsService to "mux".
 // UnaryRPC     :call RoomsServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -86,6 +133,13 @@ func request_RoomsService_PingPong_0(ctx context.Context, marshaler runtime.Mars
 func RegisterRoomsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RoomsServiceServer) error {
 
 	mux.Handle("GET", pattern_RoomsService_PingPong_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
+		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+		return
+	})
+
+	mux.Handle("GET", pattern_RoomsService_JoinRoom_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -163,13 +217,47 @@ func RegisterRoomsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 
 	})
 
+	mux.Handle("GET", pattern_RoomsService_JoinRoom_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.RoomsService/JoinRoom", runtime.WithHTTPPathPattern("/join-room"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		resp, md, reqErrChan, err := request_RoomsService_JoinRoom_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		go func() {
+			for err := range reqErrChan {
+				if err != nil && err != io.EOF {
+					runtime.HTTPStreamError(annotatedContext, mux, outboundMarshaler, w, req, err)
+				}
+			}
+		}()
+
+		forward_RoomsService_JoinRoom_0(annotatedContext, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
 var (
 	pattern_RoomsService_PingPong_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"ping-pong"}, ""))
+
+	pattern_RoomsService_JoinRoom_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"join-room"}, ""))
 )
 
 var (
 	forward_RoomsService_PingPong_0 = runtime.ForwardResponseStream
+
+	forward_RoomsService_JoinRoom_0 = runtime.ForwardResponseStream
 )

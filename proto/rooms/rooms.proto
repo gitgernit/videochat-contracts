@@ -12,6 +12,12 @@ service RoomsService {
       get: "/ping-pong",
     };
   }
+
+  rpc JoinRoom(stream RoomMethod) returns (stream RoomMethod) {
+    option (google.api.http) = {
+      get: "/join-room",
+    };
+  }
 }
 
 message Ping {
@@ -20,4 +26,19 @@ message Ping {
 
 message Pong {
   uint32 counter = 1;
+}
+
+message SendMessageRequest {
+  string text = 1;
+}
+
+message MessageReceivedNotification {
+  string text = 1;
+}
+
+message RoomMethod {
+  oneof method {
+    SendMessageRequest send_message = 1;
+    MessageReceivedNotification message_received = 2;
+  }
 }
