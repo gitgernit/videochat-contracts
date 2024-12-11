@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RoomsService_PingPong_FullMethodName = "/proto.RoomsService/PingPong"
-	RoomsService_JoinRoom_FullMethodName = "/proto.RoomsService/JoinRoom"
+	RoomsService_PingPong_FullMethodName   = "/proto.RoomsService/PingPong"
+	RoomsService_CreateRoom_FullMethodName = "/proto.RoomsService/CreateRoom"
+	RoomsService_JoinRoom_FullMethodName   = "/proto.RoomsService/JoinRoom"
 )
 
 // RoomsServiceClient is the client API for RoomsService service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RoomsServiceClient interface {
 	PingPong(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[Ping, Pong], error)
+	CreateRoom(ctx context.Context, in *CreateRoomRequest, opts ...grpc.CallOption) (*CreateRoomResponse, error)
 	JoinRoom(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[RoomMethod, RoomMethod], error)
 }
 
@@ -52,6 +54,16 @@ func (c *roomsServiceClient) PingPong(ctx context.Context, opts ...grpc.CallOpti
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type RoomsService_PingPongClient = grpc.BidiStreamingClient[Ping, Pong]
 
+func (c *roomsServiceClient) CreateRoom(ctx context.Context, in *CreateRoomRequest, opts ...grpc.CallOption) (*CreateRoomResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateRoomResponse)
+	err := c.cc.Invoke(ctx, RoomsService_CreateRoom_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *roomsServiceClient) JoinRoom(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[RoomMethod, RoomMethod], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &RoomsService_ServiceDesc.Streams[1], RoomsService_JoinRoom_FullMethodName, cOpts...)
@@ -70,6 +82,7 @@ type RoomsService_JoinRoomClient = grpc.BidiStreamingClient[RoomMethod, RoomMeth
 // for forward compatibility.
 type RoomsServiceServer interface {
 	PingPong(grpc.BidiStreamingServer[Ping, Pong]) error
+	CreateRoom(context.Context, *CreateRoomRequest) (*CreateRoomResponse, error)
 	JoinRoom(grpc.BidiStreamingServer[RoomMethod, RoomMethod]) error
 	mustEmbedUnimplementedRoomsServiceServer()
 }
@@ -83,6 +96,9 @@ type UnimplementedRoomsServiceServer struct{}
 
 func (UnimplementedRoomsServiceServer) PingPong(grpc.BidiStreamingServer[Ping, Pong]) error {
 	return status.Errorf(codes.Unimplemented, "method PingPong not implemented")
+}
+func (UnimplementedRoomsServiceServer) CreateRoom(context.Context, *CreateRoomRequest) (*CreateRoomResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRoom not implemented")
 }
 func (UnimplementedRoomsServiceServer) JoinRoom(grpc.BidiStreamingServer[RoomMethod, RoomMethod]) error {
 	return status.Errorf(codes.Unimplemented, "method JoinRoom not implemented")
@@ -115,6 +131,24 @@ func _RoomsService_PingPong_Handler(srv interface{}, stream grpc.ServerStream) e
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type RoomsService_PingPongServer = grpc.BidiStreamingServer[Ping, Pong]
 
+func _RoomsService_CreateRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRoomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomsServiceServer).CreateRoom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoomsService_CreateRoom_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomsServiceServer).CreateRoom(ctx, req.(*CreateRoomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RoomsService_JoinRoom_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(RoomsServiceServer).JoinRoom(&grpc.GenericServerStream[RoomMethod, RoomMethod]{ServerStream: stream})
 }
@@ -128,7 +162,12 @@ type RoomsService_JoinRoomServer = grpc.BidiStreamingServer[RoomMethod, RoomMeth
 var RoomsService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.RoomsService",
 	HandlerType: (*RoomsServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateRoom",
+			Handler:    _RoomsService_CreateRoom_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "PingPong",

@@ -13,6 +13,12 @@ service RoomsService {
     };
   }
 
+  rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {
+    option (google.api.http) = {
+      get: "/create-room"
+    };
+  }
+
   rpc JoinRoom(stream RoomMethod) returns (stream RoomMethod) {
     option (google.api.http) = {
       get: "/join-room",
@@ -26,6 +32,12 @@ message Ping {
 
 message Pong {
   uint32 counter = 1;
+}
+
+message CreateRoomRequest {}
+
+message CreateRoomResponse {
+  string id = 1;
 }
 
 message SendMessageRequest {
