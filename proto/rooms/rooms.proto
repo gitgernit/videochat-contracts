@@ -46,6 +46,7 @@ message SendMessageRequest {
 
 message MessageReceivedNotification {
   string text = 1;
+  string username = 2;
 }
 
 message RoomMethod {
