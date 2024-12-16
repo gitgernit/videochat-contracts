@@ -55,10 +55,15 @@ message CreateRoomResponse {
 }
 
 
+message User {
+  string id = 1;
+  string username = 2;
+}
+
 message GetRoomUsers {}
 
 message RoomUsers {
-  repeated string username = 1;
+  repeated User users = 1;
 }
 
 message SendMessageRequest {
@@ -70,9 +75,14 @@ message MessageReceivedNotification {
   string username = 2;
 }
 
-message SendSDP {
+message SDP {
   string type = 1;
   string sdp = 2;
+  string username = 3;
+}
+
+message SendSDP {
+  repeated SDP sdp = 1;
 }
 
 message SDPReceivedNotification {
