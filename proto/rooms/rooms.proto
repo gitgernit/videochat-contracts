@@ -88,7 +88,8 @@ message SendSDP {
 message SDPReceivedNotification {
   string type = 1;
   string sdp = 2;
-  string username = 3;
+  string to = 3;
+  string from = 4;
 }
 
 message SendIceCandidate {
