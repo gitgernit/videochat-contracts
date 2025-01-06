@@ -12,6 +12,24 @@ service RoomsService {
       get: "/ping-pong",
     };
   }
+
+  rpc ListenForRooms(ListenForRoomsRequest) returns (stream NewRoomNotification) {
+    option (google.api.http) = {
+      get: "/listen-for-rooms"
+    };
+  }
+
+  rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {
+    option (google.api.http) = {
+      get: "/create-room"
+    };
+  }
+
+  rpc JoinRoom(stream RoomMethod) returns (stream RoomMethod) {
+    option (google.api.http) = {
+      get: "/join-room",
+    };
+  }
 }
 
 message Ping {
@@ -20,4 +38,78 @@ message Ping {
 
 message Pong {
   uint32 counter = 1;
+}
+
+
+message ListenForRoomsRequest {}
+
+message NewRoomNotification {
+  string id = 1;
+}
+
+
+message CreateRoomRequest {}
+
+message CreateRoomResponse {
+  string id = 1;
+}
+
+
+message User {
+  string id = 1;
+  string username = 2;
+}
+
+message GetRoomUsers {}
+
+message RoomUsers {
+  repeated User users = 1;
+}
+
+message SendMessageRequest {
+  string text = 1;
+}
+
+message MessageReceivedNotification {
+  string text = 1;
+  string username = 2;
+}
+
+message SDP {
+  string type = 1;
+  string sdp = 2;
+  string username = 3;
+}
+
+message SendSDP {
+  repeated SDP sdp = 1;
+}
+
+message SDPReceivedNotification {
+  string type = 1;
+  string sdp = 2;
+  string to = 3;
+  string from = 4;
+}
+
+message SendIceCandidate {
+  string candidate = 1;
+}
+
+message IceCandidateReceivedNotification {
+  string candidate = 1;
+  string username = 2;
+}
+
+message RoomMethod {
+  oneof method {
+    SendMessageRequest send_message = 1;
+    MessageReceivedNotification message_received = 2;
+    SendSDP send_sdp = 3;
+    SDPReceivedNotification sdp_received = 4;
+    SendIceCandidate send_ice_candidate = 5;
+    IceCandidateReceivedNotification ice_candidate_received = 6;
+    GetRoomUsers get_room_users = 7;
+    RoomUsers room_users = 8;
+  }
 }
