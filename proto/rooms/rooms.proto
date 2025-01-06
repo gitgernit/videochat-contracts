@@ -44,7 +44,7 @@ message Pong {
 message ListenForRoomsRequest {}
 
 message NewRoomNotification {
-  string id = 1;
+  string name = 1;
 }
 
 
@@ -53,7 +53,7 @@ message CreateRoomRequest {
 }
 
 message CreateRoomResponse {
-  string id = 1;
+  string name = 1;
 }
 
 

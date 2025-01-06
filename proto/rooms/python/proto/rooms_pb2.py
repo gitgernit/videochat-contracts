@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11rooms/rooms.proto\x12\x05proto\x1a\x1cgoogle/api/annotations.proto\"\x17\n\x04Ping\x12\x0f\n\x07\x63ounter\x18\x01 \x01(\r\"\x17\n\x04Pong\x12\x0f\n\x07\x63ounter\x18\x01 \x01(\r\"\x17\n\x15ListenForRoomsRequest\"!\n\x13NewRoomNotification\x12\n\n\x02id\x18\x01 \x01(\t\"!\n\x11\x43reateRoomRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\" \n\x12\x43reateRoomResponse\x12\n\n\x02id\x18\x01 \x01(\t\"$\n\x04User\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"\x0e\n\x0cGetRoomUsers\"\'\n\tRoomUsers\x12\x1a\n\x05users\x18\x01 \x03(\x0b\x32\x0b.proto.User\"\"\n\x12SendMessageRequest\x12\x0c\n\x04text\x18\x01 \x01(\t\"=\n\x1bMessageReceivedNotification\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"2\n\x03SDP\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0b\n\x03sdp\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\"\"\n\x07SendSDP\x12\x17\n\x03sdp\x18\x01 \x03(\x0b\x32\n.proto.SDP\"N\n\x17SDPReceivedNotification\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0b\n\x03sdp\x18\x02 \x01(\t\x12\n\n\x02to\x18\x03 \x01(\t\x12\x0c\n\x04\x66rom\x18\x04 \x01(\t\"%\n\x10SendIceCandidate\x12\x11\n\tcandidate\x18\x01 \x01(\t\"G\n IceCandidateReceivedNotification\x12\x11\n\tcandidate\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"\xbe\x03\n\nRoomMethod\x12\x31\n\x0csend_message\x18\x01 \x01(\x0b\x32\x19.proto.SendMessageRequestH\x00\x12>\n\x10message_received\x18\x02 \x01(\x0b\x32\".proto.MessageReceivedNotificationH\x00\x12\"\n\x08send_sdp\x18\x03 \x01(\x0b\x32\x0e.proto.SendSDPH\x00\x12\x36\n\x0csdp_received\x18\x04 \x01(\x0b\x32\x1e.proto.SDPReceivedNotificationH\x00\x12\x35\n\x12send_ice_candidate\x18\x05 \x01(\x0b\x32\x17.proto.SendIceCandidateH\x00\x12I\n\x16ice_candidate_received\x18\x06 \x01(\x0b\x32\'.proto.IceCandidateReceivedNotificationH\x00\x12-\n\x0eget_room_users\x18\x07 \x01(\x0b\x32\x13.proto.GetRoomUsersH\x00\x12&\n\nroom_users\x18\x08 \x01(\x0b\x32\x10.proto.RoomUsersH\x00\x42\x08\n\x06method2\xd8\x02\n\x0cRoomsService\x12<\n\x08PingPong\x12\x0b.proto.Ping\x1a\x0b.proto.Pong\"\x12\x82\xd3\xe4\x93\x02\x0c\x12\n/ping-pong(\x01\x30\x01\x12g\n\x0eListenForRooms\x12\x1c.proto.ListenForRoomsRequest\x1a\x1a.proto.NewRoomNotification\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/listen-for-rooms0\x01\x12W\n\nCreateRoom\x12\x18.proto.CreateRoomRequest\x1a\x19.proto.CreateRoomResponse\"\x14\x82\xd3\xe4\x93\x02\x0e\x12\x0c/create-room\x12H\n\x08JoinRoom\x12\x11.proto.RoomMethod\x1a\x11.proto.RoomMethod\"\x12\x82\xd3\xe4\x93\x02\x0c\x12\n/join-room(\x01\x30\x01\x42\x16Z\x14proto/rooms/go/protob\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11rooms/rooms.proto\x12\x05proto\x1a\x1cgoogle/api/annotations.proto\"\x17\n\x04Ping\x12\x0f\n\x07\x63ounter\x18\x01 \x01(\r\"\x17\n\x04Pong\x12\x0f\n\x07\x63ounter\x18\x01 \x01(\r\"\x17\n\x15ListenForRoomsRequest\"#\n\x13NewRoomNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"!\n\x11\x43reateRoomRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\"\n\x12\x43reateRoomResponse\x12\x0c\n\x04name\x18\x01 \x01(\t\"$\n\x04User\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"\x0e\n\x0cGetRoomUsers\"\'\n\tRoomUsers\x12\x1a\n\x05users\x18\x01 \x03(\x0b\x32\x0b.proto.User\"\"\n\x12SendMessageRequest\x12\x0c\n\x04text\x18\x01 \x01(\t\"=\n\x1bMessageReceivedNotification\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"2\n\x03SDP\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0b\n\x03sdp\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\"\"\n\x07SendSDP\x12\x17\n\x03sdp\x18\x01 \x03(\x0b\x32\n.proto.SDP\"N\n\x17SDPReceivedNotification\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0b\n\x03sdp\x18\x02 \x01(\t\x12\n\n\x02to\x18\x03 \x01(\t\x12\x0c\n\x04\x66rom\x18\x04 \x01(\t\"%\n\x10SendIceCandidate\x12\x11\n\tcandidate\x18\x01 \x01(\t\"G\n IceCandidateReceivedNotification\x12\x11\n\tcandidate\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"\xbe\x03\n\nRoomMethod\x12\x31\n\x0csend_message\x18\x01 \x01(\x0b\x32\x19.proto.SendMessageRequestH\x00\x12>\n\x10message_received\x18\x02 \x01(\x0b\x32\".proto.MessageReceivedNotificationH\x00\x12\"\n\x08send_sdp\x18\x03 \x01(\x0b\x32\x0e.proto.SendSDPH\x00\x12\x36\n\x0csdp_received\x18\x04 \x01(\x0b\x32\x1e.proto.SDPReceivedNotificationH\x00\x12\x35\n\x12send_ice_candidate\x18\x05 \x01(\x0b\x32\x17.proto.SendIceCandidateH\x00\x12I\n\x16ice_candidate_received\x18\x06 \x01(\x0b\x32\'.proto.IceCandidateReceivedNotificationH\x00\x12-\n\x0eget_room_users\x18\x07 \x01(\x0b\x32\x13.proto.GetRoomUsersH\x00\x12&\n\nroom_users\x18\x08 \x01(\x0b\x32\x10.proto.RoomUsersH\x00\x42\x08\n\x06method2\xd8\x02\n\x0cRoomsService\x12<\n\x08PingPong\x12\x0b.proto.Ping\x1a\x0b.proto.Pong\"\x12\x82\xd3\xe4\x93\x02\x0c\x12\n/ping-pong(\x01\x30\x01\x12g\n\x0eListenForRooms\x12\x1c.proto.ListenForRoomsRequest\x1a\x1a.proto.NewRoomNotification\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/listen-for-rooms0\x01\x12W\n\nCreateRoom\x12\x18.proto.CreateRoomRequest\x1a\x19.proto.CreateRoomResponse\"\x14\x82\xd3\xe4\x93\x02\x0e\x12\x0c/create-room\x12H\n\x08JoinRoom\x12\x11.proto.RoomMethod\x1a\x11.proto.RoomMethod\"\x12\x82\xd3\xe4\x93\x02\x0c\x12\n/join-room(\x01\x30\x01\x42\x16Z\x14proto/rooms/go/protob\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -48,33 +48,33 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_LISTENFORROOMSREQUEST']._serialized_start=108
   _globals['_LISTENFORROOMSREQUEST']._serialized_end=131
   _globals['_NEWROOMNOTIFICATION']._serialized_start=133
-  _globals['_NEWROOMNOTIFICATION']._serialized_end=166
-  _globals['_CREATEROOMREQUEST']._serialized_start=168
-  _globals['_CREATEROOMREQUEST']._serialized_end=201
-  _globals['_CREATEROOMRESPONSE']._serialized_start=203
-  _globals['_CREATEROOMRESPONSE']._serialized_end=235
-  _globals['_USER']._serialized_start=237
-  _globals['_USER']._serialized_end=273
-  _globals['_GETROOMUSERS']._serialized_start=275
-  _globals['_GETROOMUSERS']._serialized_end=289
-  _globals['_ROOMUSERS']._serialized_start=291
-  _globals['_ROOMUSERS']._serialized_end=330
-  _globals['_SENDMESSAGEREQUEST']._serialized_start=332
-  _globals['_SENDMESSAGEREQUEST']._serialized_end=366
-  _globals['_MESSAGERECEIVEDNOTIFICATION']._serialized_start=368
-  _globals['_MESSAGERECEIVEDNOTIFICATION']._serialized_end=429
-  _globals['_SDP']._serialized_start=431
-  _globals['_SDP']._serialized_end=481
-  _globals['_SENDSDP']._serialized_start=483
-  _globals['_SENDSDP']._serialized_end=517
-  _globals['_SDPRECEIVEDNOTIFICATION']._serialized_start=519
-  _globals['_SDPRECEIVEDNOTIFICATION']._serialized_end=597
-  _globals['_SENDICECANDIDATE']._serialized_start=599
-  _globals['_SENDICECANDIDATE']._serialized_end=636
-  _globals['_ICECANDIDATERECEIVEDNOTIFICATION']._serialized_start=638
-  _globals['_ICECANDIDATERECEIVEDNOTIFICATION']._serialized_end=709
-  _globals['_ROOMMETHOD']._serialized_start=712
-  _globals['_ROOMMETHOD']._serialized_end=1158
-  _globals['_ROOMSSERVICE']._serialized_start=1161
-  _globals['_ROOMSSERVICE']._serialized_end=1505
+  _globals['_NEWROOMNOTIFICATION']._serialized_end=168
+  _globals['_CREATEROOMREQUEST']._serialized_start=170
+  _globals['_CREATEROOMREQUEST']._serialized_end=203
+  _globals['_CREATEROOMRESPONSE']._serialized_start=205
+  _globals['_CREATEROOMRESPONSE']._serialized_end=239
+  _globals['_USER']._serialized_start=241
+  _globals['_USER']._serialized_end=277
+  _globals['_GETROOMUSERS']._serialized_start=279
+  _globals['_GETROOMUSERS']._serialized_end=293
+  _globals['_ROOMUSERS']._serialized_start=295
+  _globals['_ROOMUSERS']._serialized_end=334
+  _globals['_SENDMESSAGEREQUEST']._serialized_start=336
+  _globals['_SENDMESSAGEREQUEST']._serialized_end=370
+  _globals['_MESSAGERECEIVEDNOTIFICATION']._serialized_start=372
+  _globals['_MESSAGERECEIVEDNOTIFICATION']._serialized_end=433
+  _globals['_SDP']._serialized_start=435
+  _globals['_SDP']._serialized_end=485
+  _globals['_SENDSDP']._serialized_start=487
+  _globals['_SENDSDP']._serialized_end=521
+  _globals['_SDPRECEIVEDNOTIFICATION']._serialized_start=523
+  _globals['_SDPRECEIVEDNOTIFICATION']._serialized_end=601
+  _globals['_SENDICECANDIDATE']._serialized_start=603
+  _globals['_SENDICECANDIDATE']._serialized_end=640
+  _globals['_ICECANDIDATERECEIVEDNOTIFICATION']._serialized_start=642
+  _globals['_ICECANDIDATERECEIVEDNOTIFICATION']._serialized_end=713
+  _globals['_ROOMMETHOD']._serialized_start=716
+  _globals['_ROOMMETHOD']._serialized_end=1162
+  _globals['_ROOMSSERVICE']._serialized_start=1165
+  _globals['_ROOMSSERVICE']._serialized_end=1509
 # @@protoc_insertion_point(module_scope)
