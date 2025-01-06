@@ -39,12 +39,45 @@ class RoomsServiceStub(object):
                 request_serializer=rooms_dot_rooms__pb2.Ping.SerializeToString,
                 response_deserializer=rooms_dot_rooms__pb2.Pong.FromString,
                 _registered_method=True)
+        self.ListenForRooms = channel.unary_stream(
+                '/proto.RoomsService/ListenForRooms',
+                request_serializer=rooms_dot_rooms__pb2.ListenForRoomsRequest.SerializeToString,
+                response_deserializer=rooms_dot_rooms__pb2.NewRoomNotification.FromString,
+                _registered_method=True)
+        self.CreateRoom = channel.unary_unary(
+                '/proto.RoomsService/CreateRoom',
+                request_serializer=rooms_dot_rooms__pb2.CreateRoomRequest.SerializeToString,
+                response_deserializer=rooms_dot_rooms__pb2.CreateRoomResponse.FromString,
+                _registered_method=True)
+        self.JoinRoom = channel.stream_stream(
+                '/proto.RoomsService/JoinRoom',
+                request_serializer=rooms_dot_rooms__pb2.RoomMethod.SerializeToString,
+                response_deserializer=rooms_dot_rooms__pb2.RoomMethod.FromString,
+                _registered_method=True)
 
 
 class RoomsServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def PingPong(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListenForRooms(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateRoom(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def JoinRoom(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +90,21 @@ def add_RoomsServiceServicer_to_server(servicer, server):
                     servicer.PingPong,
                     request_deserializer=rooms_dot_rooms__pb2.Ping.FromString,
                     response_serializer=rooms_dot_rooms__pb2.Pong.SerializeToString,
+            ),
+            'ListenForRooms': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListenForRooms,
+                    request_deserializer=rooms_dot_rooms__pb2.ListenForRoomsRequest.FromString,
+                    response_serializer=rooms_dot_rooms__pb2.NewRoomNotification.SerializeToString,
+            ),
+            'CreateRoom': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateRoom,
+                    request_deserializer=rooms_dot_rooms__pb2.CreateRoomRequest.FromString,
+                    response_serializer=rooms_dot_rooms__pb2.CreateRoomResponse.SerializeToString,
+            ),
+            'JoinRoom': grpc.stream_stream_rpc_method_handler(
+                    servicer.JoinRoom,
+                    request_deserializer=rooms_dot_rooms__pb2.RoomMethod.FromString,
+                    response_serializer=rooms_dot_rooms__pb2.RoomMethod.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +134,87 @@ class RoomsService(object):
             '/proto.RoomsService/PingPong',
             rooms_dot_rooms__pb2.Ping.SerializeToString,
             rooms_dot_rooms__pb2.Pong.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListenForRooms(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/proto.RoomsService/ListenForRooms',
+            rooms_dot_rooms__pb2.ListenForRoomsRequest.SerializeToString,
+            rooms_dot_rooms__pb2.NewRoomNotification.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreateRoom(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/proto.RoomsService/CreateRoom',
+            rooms_dot_rooms__pb2.CreateRoomRequest.SerializeToString,
+            rooms_dot_rooms__pb2.CreateRoomResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def JoinRoom(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_stream(
+            request_iterator,
+            target,
+            '/proto.RoomsService/JoinRoom',
+            rooms_dot_rooms__pb2.RoomMethod.SerializeToString,
+            rooms_dot_rooms__pb2.RoomMethod.FromString,
             options,
             channel_credentials,
             insecure,

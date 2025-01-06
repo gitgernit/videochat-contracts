@@ -48,7 +48,9 @@ message NewRoomNotification {
 }
 
 
-message CreateRoomRequest {}
+message CreateRoomRequest {
+  string name = 1;
+}
 
 message CreateRoomResponse {
   string id = 1;
