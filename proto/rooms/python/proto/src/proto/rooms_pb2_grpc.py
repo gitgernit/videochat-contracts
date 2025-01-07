@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from rooms import rooms_pb2 as rooms_dot_rooms__pb2
+from proto import rooms_pb2 as rooms_dot_rooms__pb2
 
 GRPC_GENERATED_VERSION = '1.69.0'
 GRPC_VERSION = grpc.__version__
